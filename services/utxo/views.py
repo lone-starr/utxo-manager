@@ -4,20 +4,28 @@ from glclient import Scheduler
 from glclient import Signer
 from glclient import TlsConfig
 import os
+import json
 
 
 def utxo_list(request):
     node = get_node()
-    # return HttpResponse(node)
     outputs = node.list_funds().outputs
+    # respJson = json.dumps(outDict)
+    # write_file_content(outputs.json, respJson)
+    listOut = []
 
-    return HttpResponse('Node UTXOs: count(' + str(len(outputs)) + ')')
+    for o in outputs:
+        listOut = listOut + \
+            [{"txid": str(o.output.txid.hex), "outnum": o.output.outnum,
+                "address": o.address, "amount": str(o.amount)}]
+
+    return HttpResponse(json.dumps(listOut), content_type="application/json")
 
 
 def get_node():
     network = "testnet"
     seed = get_file_contents('device_seed.bytes', 'rb')
-    cert = get_file_contents('device_cert2.pem')
+    cert = get_file_contents('device_cert2.crt')
     key = get_file_contents('device_key2.pem')
     tls = TlsConfig().identity(cert, key)
     signer = Signer(seed, network=network, tls=tls)
@@ -35,4 +43,4 @@ def get_file_contents(filename: str, mode: str = 'r'):
 def write_file_content(filename: str, content):
     module_dir = os.path.dirname(__file__)  # get current directory
     file_path = os.path.join(module_dir, filename)
-    open(file_path, 'wb').write(content)
+    open(file_path, 'w').write(content)
