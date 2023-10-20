@@ -1,17 +1,14 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import JsonResponse
 from glclient import Scheduler
 from glclient import Signer
 from glclient import TlsConfig
 import os
-import json
 
 
 def utxo_list(request):
     node = get_node()
     outputs = node.list_funds().outputs
-    # respJson = json.dumps(outDict)
-    # write_file_content(outputs.json, respJson)
     listOut = []
 
     for o in outputs:
@@ -19,7 +16,8 @@ def utxo_list(request):
             [{"txid": str(o.output.txid.hex), "outnum": o.output.outnum,
                 "address": o.address, "amount": str(o.amount)}]
 
-    return HttpResponse(json.dumps(listOut), content_type="application/json")
+    response = JsonResponse(listOut, safe=False)
+    return response
 
 
 def get_node():
