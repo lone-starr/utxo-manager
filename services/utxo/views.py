@@ -13,7 +13,7 @@ def utxo_list(request):
 
     for o in outputs:
         listOut = listOut + \
-            [{"txid": str(o.output.txid.hex), "outnum": o.output.outnum,
+            [{"txid": o.output.txid.hex(), "outnum": o.output.outnum,
                 "address": o.address, "amount": str(o.amount)}]
 
     response = JsonResponse(listOut, safe=False)
