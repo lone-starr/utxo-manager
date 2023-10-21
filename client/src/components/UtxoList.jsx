@@ -11,7 +11,6 @@ const UtxoList = () => {
       const response = await fetch('http://127.0.0.1:7000/utxos');
       const jsonData = await response.json();
       setUtxos(jsonData);
-      console.log(jsonData);
     } catch (error) {
       console.error(error.message);
     }

@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.views.decorators.cache import cache_page
 from glclient import Scheduler
 from glclient import Signer
 from glclient import TlsConfig
 import os
 
 
+@cache_page(2 * 60)
 def utxo_list(request):
     node = get_node()
     outputs = node.list_funds().outputs
