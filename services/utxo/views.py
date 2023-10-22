@@ -31,6 +31,7 @@ def get_node():
     signer = Signer(seed, network=network, tls=tls)
     signer.run_in_thread()
     scheduler = Scheduler(signer.node_id(), network=network, tls=tls)
+    print('scheduler called')
     return scheduler.node()
 
 

@@ -5,9 +5,13 @@ import { Fragment, useEffect, useState } from "react";
 const UtxoList = () => {
 
   const [utxos, setUtxos] = useState([]);
+  const [loaded, setLoaded] = useState([]);
 
   const getUtxos = async () => {
     try {
+      if (!loaded){
+        setLoaded(True);
+      }
       const response = await fetch('http://127.0.0.1:7000/utxos');
       const jsonData = await response.json();
       setUtxos(jsonData);
@@ -18,7 +22,7 @@ const UtxoList = () => {
 
   useEffect(() => {
     getUtxos();
-  });
+  }, [loaded]);
 
 
   return (
