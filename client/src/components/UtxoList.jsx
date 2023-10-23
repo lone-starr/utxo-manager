@@ -31,7 +31,7 @@ const UtxoList = () => {
       <table class="table mt-5 text-center">
         <thead>
           <tr>
-            <th>TXID</th>
+            <th>TXID:Output Number</th>
             <th>Address</th>
             <th>Amount</th>
           </tr>
@@ -40,7 +40,7 @@ const UtxoList = () => {
           {utxos.map((o) => (
             <tr key={o.txid}>
               <td>
-                {o.txid}
+                {o.txid}:{o.outnum}
               </td>
               <td>{o.address}</td>
               <td>{o.amount}</td>
