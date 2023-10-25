@@ -40,9 +40,11 @@ const UtxoList = () => {
           {utxos.map((o) => (
             <tr key={o.txid}>
               <td>
-                {o.txid}:{o.outnum}
+                <a href={"https://blockstream.info/testnet/tx/" + o.txid} target="_blank">{o.txid}:{o.outnum}</a>
               </td>
-              <td>{o.address}</td>
+              <td>
+                <a href={"https://blockstream.info/testnet/address/" + o.address} target="_blank">{o.address}</a>
+              </td>
               <td>{o.amount}</td>
             </tr>
           ))}
