@@ -3,5 +3,5 @@ WORKDIR /app
 COPY . .
 RUN npm install
 ENV SERVER_UTXO_URI=http://127.0.0.1:7000/utxos
-EXPOSE 5173
+EXPOSE 8080
 CMD ["npm", "run", "dev"]
